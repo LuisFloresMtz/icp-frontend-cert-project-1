@@ -1,7 +1,9 @@
+import Cart from "./Components/Cart/Cart";
+
 function App() {
   return (
     <main>
-      <div>Hello!</div>
+      <Cart />
     </main>
   );
 }
