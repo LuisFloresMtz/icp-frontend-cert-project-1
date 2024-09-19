@@ -1,25 +1,8 @@
 import React, { useEffect, useState } from "react";
-import CartItem from "../CartItem/CartItem";
+import CartItem from "./CartItem";
 
 export default function Cart() {
   const [cart, setCart] = useState([]);
-
-  const initialCart = [
-    {
-      name: "Producto 1",
-      price: 100,
-      quantity: 1,
-    },
-    {
-      name: "Producto 2",
-      price: 200,
-      quantity: 1,
-    },
-  ];
-
-  useEffect(() => {
-    setCart(initialCart);
-  }, []);
 
   const handleIncrement = (index) => {
     const newCart = [...cart];
