@@ -3,12 +3,20 @@
   "canisters": {
     "backend": {
       "type": "motoko",
-      "main": "src/backend/main.mo"
+      "main": "src/backend/main.mo",
+      "declarations": {
+        "node_compatibility": false,
+        "output": "src/frontend/src/declarations/backend"
+      }
     },
     "frontend": {
       "type": "assets",
-      "dependencies": ["backend"],
-      "source": ["src/frontend/dist"],
+      "dependencies": [
+        "backend"
+      ],
+      "source": [
+        "src/frontend/dist"
+      ],
       "workspace": "icp-frontend-project-1-frontend"
     },
     "internet_identity": {

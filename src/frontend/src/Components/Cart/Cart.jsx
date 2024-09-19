@@ -1,35 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import CartItem from "./CartItem";
+import { CartContext } from "./CartContext";
 
 export default function Cart() {
-  const [cart, setCart] = useState([]);
+  const { cart, getCart } = useContext(CartContext);
 
-  const handleIncrement = (index) => {
-    const newCart = [...cart];
-    newCart[index].quantity++;
-    setCart(newCart);
-  };
-
-  const handleDecrement = (index) => {
-    const newCart = [...cart];
-    if (newCart[index].quantity > 1) {
-      newCart[index].quantity--;
-      setCart(newCart);
-    }
-  };
+  useEffect(() => {
+    getCart();
+  }, []);
 
   return (
     <div>
       <h1>Cart</h1>
-      {cart.length > 0 ? (
+      {cart ? (
         cart.map((item, index) => (
-          <CartItem
-            key={index}
-            item={item}
-            index={index}
-            increment={handleIncrement}
-            decrement={handleDecrement}
-          />
+          <CartItem key={index} item={item} index={index} />
         ))
       ) : (
         <p>No hay productos en el carrito</p>
