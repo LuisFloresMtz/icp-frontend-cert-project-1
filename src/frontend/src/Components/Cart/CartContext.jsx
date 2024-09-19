@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 import { createActor } from "../../declarations/backend";
 
 export const CartContext = createContext();
@@ -16,15 +16,11 @@ function CartProvider({ children, identity }) {
   });
 
   const addToCart = async (product) => {
-    try {
-      await backend.addToCart(product.id, 1).then((result) => {
-        if (result) {
-          getCart();
-        }
-      });
-    } catch (err) {
-      console.error(err);
-    }
+    await backend.addToCart(product.id, 1).then((result) => {
+      if (result) {
+        getCart();
+      }
+    });
   };
 
   const getCart = async () => {
@@ -39,9 +35,33 @@ function CartProvider({ children, identity }) {
     }
   };
 
+  const updateQuantity = async (index, quantity) => {
+    await backend.updateQuantity(index, quantity).then((result) => {
+      if (result) {
+        getCart();
+      }
+    });
+  };
+
+  const removeFromCart = async (index) => {
+    await backend.removeFromCart(index).then((result) => {
+      if (result) {
+        getCart();
+      }
+    });
+  };
+
   return (
     <CartContext.Provider
-      value={{ cart, setCart, addToCart, getCart, backend }}
+      value={{
+        cart,
+        setCart,
+        addToCart,
+        getCart,
+        backend,
+        updateQuantity,
+        removeFromCart,
+      }}
     >
       {children}
     </CartContext.Provider>

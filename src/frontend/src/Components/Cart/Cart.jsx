@@ -6,13 +6,17 @@ export default function Cart() {
   const { cart, getCart } = useContext(CartContext);
 
   useEffect(() => {
-    getCart();
-  }, []);
+    const fetchCart = async () => {
+      await getCart();
+    };
+
+    fetchCart();
+  }, [getCart]);
 
   return (
     <div>
       <h1>Cart</h1>
-      {cart ? (
+      {cart && cart.length > 0 ? (
         cart.map((item, index) => (
           <CartItem key={index} item={item} index={index} />
         ))
