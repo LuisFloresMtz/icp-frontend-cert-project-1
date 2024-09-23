@@ -5,6 +5,7 @@ export const CartContext = createContext();
 
 function CartProvider({ children, identity }) {
   const [cart, setCart] = useState([]);
+  const [total, setTotal] = useState(BigInt(0));
 
   const canisterId = import.meta.env.VITE_BACKEND_CANISTER_ID;
 
@@ -33,6 +34,10 @@ function CartProvider({ children, identity }) {
       await backend.getCart().then((cart) => {
         if (cart) {
           setCart(cart.ok);
+          const aux = cart.ok.reduce((acc, item) => {
+            return acc + BigInt(item.product.price) * BigInt(item.quantity);
+          }, BigInt(0));
+          setTotal(aux);
         }
       });
     } catch (err) {
@@ -76,6 +81,7 @@ function CartProvider({ children, identity }) {
         backend,
         updateQuantity,
         removeFromCart,
+        total,
       }}
     >
       {children}

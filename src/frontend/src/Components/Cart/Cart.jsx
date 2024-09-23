@@ -1,10 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import CartItem from "./CartItem";
 import { CartContext } from "./CartContext";
-import { Typography, Button } from "@mui/material";
+import { Typography, Button, Box, Divider } from "@mui/material";
+import { useOutletContext } from "react-router-dom";
 
 export default function Cart() {
-  const { cart, getCart } = useContext(CartContext);
+  const { cart, getCart, total } = useContext(CartContext);
+  const { identity } = useOutletContext();
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -12,14 +14,15 @@ export default function Cart() {
     };
 
     fetchCart();
-  }, []);
+  }, [getCart]);
 
   function handlePay() {
-    let total = 0;
-    cart.map((item) => {
-      total += item.quantity * item.product.price;
+    let totalPayment = BigInt(0);
+    cart.forEach((item) => {
+      const price = BigInt(item.product.price);
+      totalPayment += BigInt(item.quantity) * price;
     });
-    alert("Total: ", total);
+    alert(`Total: ${totalPayment.toString()}`);
   }
 
   return (
@@ -27,14 +30,40 @@ export default function Cart() {
       <Typography gutterBottom variant="h5" component="div">
         Cart
       </Typography>
-      {cart && cart.length > 0 ? (
-        cart.map((item, index) => (
-          <CartItem key={index} item={item} index={index} />
-        ))
+      {identity.getPrincipal().isAnonymous() ? (
+        <p>Inicia sesion para ver tu carrito</p>
       ) : (
-        <p>No hay productos en el carrito</p>
+        <>
+          {cart && cart.length > 0 ? (
+            <>
+              {cart.map((item, index) => (
+                <CartItem key={index} item={item} />
+              ))}
+              <Divider />
+
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  marginTop: 2,
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  sx={{ color: "text.secondary", marginRight: 2 }}
+                >
+                  Total: {Number(total)}
+                </Typography>
+                <Button onClick={handlePay} variant="contained" color="success">
+                  Pay
+                </Button>
+              </Box>
+            </>
+          ) : (
+            <p>No hay productos en el carrito</p>
+          )}
+        </>
       )}
-      <Button onClick={handlePay}>Pay</Button>
     </div>
   );
 }

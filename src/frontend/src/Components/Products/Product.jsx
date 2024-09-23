@@ -6,7 +6,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-export default function ({ product, addToCart }) {
+export default function ({ product, addToCart, identity }) {
+  console.log(identity);
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -26,7 +27,16 @@ export default function ({ product, addToCart }) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={() => addToCart(product)}>
+        <Button
+          size="small"
+          onClick={() => {
+            if (identity.getPrincipal().isAnonymous()) {
+              alert("Inicia sesion para agregar al carrito");
+            } else {
+              addToCart(product);
+            }
+          }}
+        >
           Add to cart
         </Button>
       </CardActions>

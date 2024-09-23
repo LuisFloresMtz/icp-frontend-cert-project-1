@@ -2,13 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import Product from "./Product";
 import Grid2 from "@mui/material/Grid2";
 import Container from "@mui/material/Container";
-import Snackbar from "@mui/material/Snackbar";
 import { CartContext } from "../Cart/CartContext";
+import { useOutletContext } from "react-router-dom";
 
 export default function ProductPage() {
   const { addToCart, backend } = useContext(CartContext);
+  const context = useOutletContext();
   const [products, setProducts] = useState([]);
-
   useEffect(() => {
     getProducts();
   }, []);
@@ -30,7 +30,11 @@ export default function ProductPage() {
         {products ? (
           products.map((product, index) => (
             <Grid2 key={index} xs={12} sm={6} md={4} lg={3} size={3}>
-              <Product product={product} addToCart={addToCart} />
+              <Product
+                product={product}
+                addToCart={addToCart}
+                identity={context.identity}
+              />
             </Grid2>
           ))
         ) : (
