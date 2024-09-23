@@ -1,28 +1,45 @@
 import React, { useContext } from "react";
 import { CartContext } from "./CartContext";
-import { Divider } from "@mui/material";
+import { Divider, Typography, Button, Container } from "@mui/material";
 
 export default function CartItem({ item }) {
   const { updateQuantity, removeFromCart } = useContext(CartContext);
+
+  const handleIncrease = () => {
+    const newQuantity = item.quantity + 1;
+    updateQuantity(item.product.id, newQuantity);
+  };
+
+  const handleDecrease = () => {
+    const newQuantity = item.quantity - 1;
+    if (newQuantity <= 0) {
+      removeFromCart(item.id);
+    } else {
+      updateQuantity(item.product.id, newQuantity);
+    }
+  };
+
   return (
     <>
       <Divider />
-      <h2>{item.product.name}</h2>
-      <p>Precio: {item.product.price}</p>
-      <div className="actions">
-        <button
-          onClick={() => updateQuantity(item.product.id, item.quantity--)}
-        >
-          -
-        </button>
-        <p>Cantidad: {item.quantity}</p>
-        <button
-          onClick={() => updateQuantity(item.product.id, item.quantity++)}
-        >
-          +
-        </button>
-      </div>
-      <button onClick={() => removeFromCart(item.product.id)}>Eliminar</button>
+      <Typography gutterBottom variant="h5" component="div">
+        {item.product.name}
+      </Typography>
+      <Container>
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          Precio: {item.product.price}
+        </Typography>
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          Cantidad: {item.quantity}
+        </Typography>
+      </Container>
+      <Container>
+        <Button onClick={handleDecrease}>-</Button>
+        <Button onClick={handleIncrease}>+</Button>
+        <Button onClick={() => removeFromCart(item.product.id)}>
+          Eliminar
+        </Button>
+      </Container>
     </>
   );
 }

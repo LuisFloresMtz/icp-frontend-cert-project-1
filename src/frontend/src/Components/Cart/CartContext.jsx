@@ -16,11 +16,16 @@ function CartProvider({ children, identity }) {
   });
 
   const addToCart = async (product) => {
-    await backend.addToCart(product.id, 1).then((result) => {
-      if (result) {
-        getCart();
-      }
-    });
+    await backend
+      .addToCart(product.id, 1)
+      .then((result) => {
+        if (result) {
+          getCart();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const getCart = async () => {
@@ -36,19 +41,29 @@ function CartProvider({ children, identity }) {
   };
 
   const updateQuantity = async (index, quantity) => {
-    await backend.updateQuantity(index, quantity).then((result) => {
-      if (result) {
-        getCart();
-      }
-    });
+    await backend
+      .updateQuantity(index, quantity)
+      .then((result) => {
+        if (result) {
+          getCart();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const removeFromCart = async (index) => {
-    await backend.removeFromCart(index).then((result) => {
-      if (result) {
-        getCart();
-      }
-    });
+    await backend
+      .removeFromCart(index)
+      .then((result) => {
+        if (result) {
+          getCart();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
