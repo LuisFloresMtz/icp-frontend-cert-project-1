@@ -6,7 +6,7 @@ function initialiseOpenChatFrame(path, iframe, identity) {
   return initialise(iframe, {
     targetOrigin: "https://oc.app",
     initialPath: path,
-    identity,
+    identity: identity,
   });
 }
 
