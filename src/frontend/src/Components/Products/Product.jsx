@@ -11,7 +11,7 @@ export default function ({ product, addToCart, identity }) {
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         component="img"
-        alt="green iguana"
+        alt="Product"
         height="150"
         image={
           product.image ? product.image : "https://via.placeholder.com/150"
@@ -35,6 +35,7 @@ export default function ({ product, addToCart, identity }) {
               addToCart(product);
             }
           }}
+          variant="contained"
         >
           Add to cart
         </Button>

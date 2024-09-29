@@ -8,11 +8,11 @@ function SesionButton({ isAuthenticated }) {
   return (
     <>
       {isAuthenticated ? (
-        <Button onClick={logout} variant="contained" color="primary">
+        <Button onClick={logout} color="inherit">
           Logout
         </Button>
       ) : (
-        <Button onClick={login} variant="contained">
+        <Button onClick={login} color="inherit">
           Login
         </Button>
       )}

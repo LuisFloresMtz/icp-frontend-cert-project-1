@@ -12,7 +12,7 @@ function CartProvider({ children, identity }) {
   let backend = createActor(canisterId, {
     agentOptions: {
       identity: identity,
-      host: "http://localhost:4943",
+      host: import.meta.env.VITE_BACKEND_COMPUTER_PROVIDER,
     },
   });
 
@@ -20,7 +20,7 @@ function CartProvider({ children, identity }) {
     await backend
       .addToCart(product.id, 1)
       .then((result) => {
-        if (result) {
+        if ("ok" in result) {
           getCart();
         }
       })
@@ -49,7 +49,7 @@ function CartProvider({ children, identity }) {
     await backend
       .updateQuantity(index, quantity)
       .then((result) => {
-        if (result) {
+        if ("ok" in result) {
           getCart();
         }
       })
@@ -62,7 +62,7 @@ function CartProvider({ children, identity }) {
     await backend
       .removeFromCart(index)
       .then((result) => {
-        if (result) {
+        if ("ok" in result) {
           getCart();
         }
       })

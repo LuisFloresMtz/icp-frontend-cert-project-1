@@ -39,7 +39,11 @@ export default function CartItem({ item }) {
         </Container>
         <Button onClick={handleDecrease}>-</Button>
         <Button onClick={handleIncrease}>+</Button>
-        <Button onClick={() => removeFromCart(item.product.id)}>
+        <Button
+          onClick={() => removeFromCart(item.product.id)}
+          color="warning"
+          variant="contained"
+        >
           Eliminar
         </Button>
       </Container>
