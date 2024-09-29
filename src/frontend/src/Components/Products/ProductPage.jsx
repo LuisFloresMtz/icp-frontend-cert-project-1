@@ -4,6 +4,7 @@ import Grid2 from "@mui/material/Grid2";
 import Container from "@mui/material/Container";
 import { CartContext } from "../Cart/CartContext";
 import { useOutletContext } from "react-router-dom";
+import Announcements from "../OpenChat/Announcements";
 
 export default function ProductPage() {
   const { addToCart, backend } = useContext(CartContext);
@@ -25,7 +26,8 @@ export default function ProductPage() {
   }
 
   return (
-    <Container fixed sx={{ padding: "2rem" }}>
+    <Container sx={{ display: "flex", paddingX: "0", paddingY: "2rem" }}>
+      <Announcements />
       <Grid2 container spacing={4}>
         {products ? (
           products.map((product, index) => (
